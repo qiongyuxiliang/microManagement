@@ -1,0 +1,86 @@
+<div>
+ <nav-bar index1="6" index2="63"></nav-bar>
+ <div class="main_content">
+     <enjoy-menu></enjoy-menu>
+     <div class="content_box">
+         <div class="mum" ng-show="mum">
+             <div class="m-load2">
+                 <div class="line">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                     <div></div>
+                 </div>
+                 <div class="circlebg"></div>
+             </div>
+         </div>
+         <div>
+             <span style="margin-top:18px;font-family:Aria;font-size:20px; width:139px;height:35px;line-height:20px;text-align:center;display:block;">充值账户管理</span>
+             <hr style="margin-top:1px;background-color:#c0bebe;height:2px;"/>
+         </div>
+         <hr style="margin-top:18px;background-color:#c0bebe;height:8px;"/>
+         <div>
+             <span style="margin-top:18px;font-family:Aria;font-size:20px; width:139px;height:35px;line-height:20px;text-align:center;display:block;">充值账户列表</span>
+             <hr style="margin-top:10px;background-color:#c0bebe;height:1px;"/>
+         </div>
+         <div class="product_content_right"style="margin-top:-45px;">
+            <div class="rightCenter">
+                <div class="product_eara">
+                    <div class="product_name" style="width:85%">
+                        <div class="product_nameEara" style="float:left;margin-top: 27px;margin-right: 50px;width:35%">
+                            <label class="bold">用户手机号:</label>
+                            <input type="text" id="mobile" style="width:50%" class="product_search" ng-model="mobile">
+                        </div>
+                        <div style="float:left;margin-top: 27px;margin-right: 50px;width:50%">
+                            <span class="bold agencyTime">时间：</span>
+                            <input class="time MStart date" id="createDateStart" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});" >&nbsp;--&nbsp;<input class="time MEnd date" id="createDateEnd" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});">
+                        </div>
+                        <div  style="margin-top: 90px;width:32%">
+                            <label style="font-weight:600;">账户状态:</label>
+                            <select class="checkStatus selectWidth" id="status" style="width:155px;border:1px solid;height:30px;color:#7f818a;">
+                                <option value=""> 全部状态</option>
+                                <option value="0">正常</option>
+                                <option value="1">冻结</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="product_searchEara">
+                        <input type="button" value="搜索" class="search_btn top_1" ng-click="searchBalance()">
+                    </div>
+                </div>
+                <div class="table_lis">
+                    <table class="table text-center ">
+                        <thead>
+                            <tr id="product_lis_title">
+                                <th class="text-center">用户名称</th>
+                                <th class="text-center">手机号</th>
+                                <th class="text-center">余额</th>
+                                <th class="text-center">账户状态</th>
+                                <th class="text-center" colspan="2">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in rechargeAccountDataList">
+                                <td>{{item.nickName}}</td>
+                                <td>{{item.mobile}}</td>
+                                <td>{{item.balance}}</td>
+                                <td>{{item.statusString}}</td>
+                                <td colspan="2">
+                                    <a ng-click="details(item.sysUserId);$event.stopPropagation()" class="orderBtn" >收支详情</a>
+                                    &nbsp;
+                                    <a ng-click="changeStatus(item.id,item.sysUserId,item.status);$event.stopPropagation()" ng-if="item.status=='1'" class="orderBtn" >解冻账户</a>
+                                    <a ng-click="changeStatus(item.id,item.sysUserId,item.status);$event.stopPropagation()" ng-if="item.status=='0'" class="orderBtn" >冻结账户</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div page-tool></div>
+                </div>
+            </div>
+        </div>
+     </div>
+ </div>
+</div>

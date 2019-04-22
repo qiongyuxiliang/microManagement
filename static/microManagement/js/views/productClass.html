@@ -1,0 +1,111 @@
+<div  ng-click="bgAll()">
+    <nav-bar index1="8" index2="81"></nav-bar>
+    <div class="main_content">
+        <enjoy-menu></enjoy-menu>
+        <div class="content_box">
+            <div class="mum" ng-show="mum" style="height:888px;">
+                <div class="m-load2">
+                    <div class="line">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="circlebg"></div>
+                </div>
+            </div>
+            <div class="product_content_right">
+                <div class="rightCenter">
+                    <div  class="product_searchEara" align="right" style="float: left;width:15%;margin-top:50px;line-height:31px;">
+                        <input align="right"  type="button" value="新建分类" class="search_btn" ng-click="showAddOneProductClass()" style="width: 120px;margin-top: 10px;">
+                    </div>
+                    <div class="table_lis" style="margin-top:-100px;">
+
+                        <table class="table  text-center ">
+                            <tbody class="tbodyCla" ng-repeat="item in oneClassLiat">
+                            <tr>
+                                <td ng-click="void();$event.stopPropagation()">{{item.productClassName}}</td>
+
+                                <td ng-click="void();$event.stopPropagation()" colspan="3" style="
+    text-align: left;
+">
+                                    <a ng-click="details(item.productClassId);$event.stopPropagation()" class="orderBtn" >查看</a>
+                                    <a ng-click="showAddTwoProductClass(item.productClassId,item.productClassName);$event.stopPropagation()" class="orderBtn" >添加二级分类</a>
+                                    &nbsp;
+                                    <a ng-click="showUpdateClass(item.id,item.productClassName);$event.stopPropagation()" class="orderBtn" >修改</a>
+                                    &nbsp;
+                                    <a ng-if="item.sort != 1" ng-click="upClass(item.id,'one');$event.stopPropagation()" class="orderBtn" >上移</a>
+                                    &nbsp;
+                                    <a ng-if="item.sort != oneClassLiat.length" ng-click="downClass(item.id,'one');$event.stopPropagation()" class="orderBtn">下移</a>
+                                    &nbsp;
+                                    <a ng-click="delClass(item.id,'one');$event.stopPropagation()" class="orderBtn" >删除</a>
+                                </td>
+                            </tr>
+                            <!--点击查看出现的下级内容-->
+                            <tr ng-repeat="twoItem in twoList" ng-if="item.productClassId == showFlag">
+                                <td><img src="{{twoItem.url}}" style="max-width:100%;" /></td>
+                                <td>
+                                    {{twoItem.productClassName}}
+                                </td>
+
+                                <td ng-click="void();$event.stopPropagation()" colspan="3" style="
+    text-align: left;
+">
+                                    <a ng-if="twoItem.sort != 1" ng-click="upClass(twoItem.id,'two');$event.stopPropagation()" class="orderBtn" >上移</a>
+                                    &nbsp;
+                                    <a ng-if="item.sort != oneClassLiat.length" ng-click="downClass(twoItem.id,'two');$event.stopPropagation()" class="orderBtn">下移</a>
+                                    &nbsp;
+                                    <a ng-click="showUpdateTwoClass(twoItem.id,twoItem.productClassName,twoItem.url);$event.stopPropagation()" class="orderBtn" >修改</a>
+                                    &nbsp;
+                                    <a ng-click="delClass(twoItem.id,'two');$event.stopPropagation()" class="orderBtn" >删除</a>
+                                </td>
+
+                            </tr>
+
+                            <!--修改一级类目-->
+                            <div ng-if="showUpdateOneName" class="name_row uploading_product_name">
+                                <label for="oneName" style="width: 200px;margin-left: 20px;">
+                                    一级类目名称修改为:
+                                </label>
+                                <input type="text" id="UpdateOneName" class="uploading_product_name_search name" ng-model="oneClassName">
+                                <button class="save_btn" ng-click="updateClass(oneClassName)" style="background-color: red;width: 100px;height: 30px;margin-left: 386px;">确认修改</button>
+                            </div>
+
+                            <!--添加一级类目-->
+                            <div ng-if="showAddOneName" class="name_row uploading_product_name">
+                                <label for="oneName">
+                                    一级类目名称:
+                                </label>
+                                <input type="text" id="oneName" class="uploading_product_name_search name" ng-model="className" style="width: auto">
+                                <button class="save_btn" ng-click="addOneProductClass(className)" style="background-color: red;width: 96px;height: 30px;">确认添加</button>
+                            </div>
+                            <!--添加二级类目-->
+                            <div ng-if="showAddTwoName" class="name_row uploading_product_name">
+                                <label for="twoName" style="width: 200px;margin-left: 20px;">
+                                    为"{{parentName}}"添加二级类目:
+                                </label>
+                                <input type="text" id="twoName" class="uploading_product_name_search name" ng-model="twoClassName" style="width: auto;margin-left: 100px;">
+                                <input onchange="angular.element(this).scope().img_upload(this.files)" type="file" style="margin-left: 178px;margin-top: 20px;">
+                                <img ng-src="{{url}}" class="hintPic" ng-show="url!=''?true:false" style="width: 27%;height: 100%;margin: 2px;">
+                                <button class="save_btn" ng-click="addTwoProductClass(parentId,twoClassName,url)" style="background-color: red;width: 100px;height: 30px;margin-left: 337px;">确认添加</button>
+                            </div>
+                            <!--修改二级类目-->
+                            <div ng-if="showUpdateTwoName" class="name_row uploading_product_name">
+                                <label for="twoName" style="width: 200px;margin-left: 20px;">
+                                    修改二级类目:
+                                </label>
+                                <input type="text" id="updateTwoName" class="uploading_product_name_search name" ng-model="updateTwoClassName" style="width: auto;margin-left: 100px;">
+                                <input onchange="angular.element(this).scope().img_upload(this.files)" type="file" style="margin-left: 178px;margin-top: 20px;">
+                                <img ng-src="{{url}}" class="hintPic" ng-show="url!=''?true:false" style="width: 27%;height: 100%;margin: 2px;">
+                                <button class="save_btn" ng-click="updateTwoProductClass(updateTwoClassId,updateTwoClassName,url)" style="background-color: red;width: 100px;height: 30px;margin-left: 337px;">确认修改</button>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,160 @@
+<div>
+    <style>
+        .nextUser {
+            display: flex;
+            justify-content: space-between;
+            height: 100px;
+        }
+
+        .nextUser > li {
+            display: inline-block;
+            /*line-height: 200px;*/
+            /*vertical-align: middle;*/
+            border: 1px solid #D4D4D4;
+
+        }
+        .nextUser > li:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .nextUser > li:nth-child(even) {
+            background-color: #e5e5e5;
+        }
+        .nextUser > li{
+            text-align: center;
+
+        }
+        .nextUser>li>span{
+            line-height: 67px;
+            font-size: 25px;
+        }
+    </style>
+    <nav-bar></nav-bar>
+    <div class="main_content" id="top">
+        <enjoy-menu></enjoy-menu>
+        <div class="content_box">
+            <div class="mum" ng-show="mum">
+                <div class="m-load2">
+                    <div class="line">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="circlebg"></div>
+                </div>
+            </div>
+            <div class="product_content_left">
+                <a class="btn_back" ng-click="back()">返回</a>
+            </div>
+            <div class="product_content_right">
+                <div class="rightCenter">
+                    <h4>自己的信息：</h4>
+                    <div class="table_lis">
+                        <table class="table  text-center ">
+                            <thead>
+                            <tr id="product_lis_title1">
+                                <th class="text-center">用户昵称</th>
+                                <th class="text-center">用户手机号</th>
+                                <th class="text-center">用户等级</th>
+                                <th class="text-center">升级时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in selfMessage">
+                                <td>
+                                    {{item.name}}
+                                </td>
+                                <td>
+                                    {{item.mobile}}
+                                </td>
+                                <td> {{item.level}}</td>
+                                <td> {{item.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 class="juniorMess">本人上级信息：</h4>
+                    <div class="table_lis">
+                        <table class="table  text-center ">
+                            <thead>
+                            <tr id="product_lis_superiorAgency">
+                                <th class="text-center">用户昵称</th>
+                                <th class="text-center">用户手机号</th>
+                                <th class="text-center">用户等级</th>
+                                <th class="text-center">升级时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in parentsMessage">
+                                <td>
+                                    {{item.name}}
+                                </td>
+                                <td>
+                                    {{item.mobile}}
+                                </td>
+                                <td> {{item.level}}</td>
+                                <td> {{item.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div ng-show='parentsMessage.length<=0'
+                             style="background-color: #e5e5e5;text-align: center;height: 40px;line-height: 40px;">
+                            抱歉，该用户还没有父级信息
+                        </div>
+                    </div>
+                    <h4 class="juniorMess">本人下级信息：</h4>
+                    <div class='nextUser' style="margin-top: 20px;">
+                        <li><p>下级用户共：</p><span>{{totalLen}}</span></li>
+                        <li><p>普通用户共：</p><span>{{ptLen}}</span></li>
+                        <li><p>店主用户共：</p><span>{{dzLen}}</span></li>
+                        <li><p>董事用户共：</p><span>{{dsLen}}</span></li>
+                        <li style='margin-right: 5%'><p>总裁用户共：</p><span>{{zcLen}}</span></li>
+                    </div>
+                    <div class="table_lis">
+                        <table class="table  text-center ">
+                            <thead>
+                            <tr id="product_lis_title">
+
+                                <th class="text-center">用户昵称</th>
+                                <th class="text-center">用户手机号</th>
+                                <th class="text-center">用户等级</th>
+                                <th class="text-center">升级时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in childrenMessage">
+                                <td>
+                                <td>
+                                    {{item.name}}
+                                </td>
+                                <td>
+                                    {{item.mobile}}
+                                </td>
+                                <td> {{item.level}}</td>
+                                <td> {{item.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- <div class="history">
+                         <P>历史记录：</P>
+                         <P>2015/1/30成为普通</P>
+                         <P>2015/3/30成为B级</P>
+                         <P>2015/9/30成为A级</P>
+                     </div>-->
+                    <div style="margin-top:50px;">
+                        <input type="button" value="返回列表" class="confirm" ng-click='trueBtn()' style="width: 15%;height: 30px;line-height: 30px;background-color: #4D00B2;">
+                        <input type="button" value="回到顶部" class="confirm" ng-click="backToTop()" style="width: 15%;height: 30px;line-height: 30px;margin-left: 20%">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

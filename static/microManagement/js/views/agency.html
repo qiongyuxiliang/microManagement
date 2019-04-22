@@ -1,0 +1,91 @@
+<div>
+
+    <nav-bar index1="5" index2="51"></nav-bar>
+    <div class="main_content">
+        <enjoy-menu></enjoy-menu>
+        <div class="content_box">
+            <div class="mum" ng-show="mum">
+                <div class="m-load2">
+                    <div class="line">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="circlebg"></div>
+                </div>
+            </div>
+            <div class="product_content_right">
+                <div class="rightCenter">
+                    <div class="product_lis meunLis1" style="min-width:657px">
+                        <button ng-click="bgChangeAndSearch('')" ng-class="{'active':status==''}">全部用户</button>
+                        <button ng-click="bgChangeAndSearch('dz')" ng-class="{'active':status=='dz'}">店主</button>
+                        <button ng-click="bgChangeAndSearch('ds')" ng-class="{'active':status=='ds'}">董事</button>
+                        <button ng-click="bgChangeAndSearch('zc')" ng-class="{'active':status=='zc'}">总裁</button>
+                        <button ng-click="bgChangeAndSearch('pt')" ng-class="{'active':status=='pt'}">普通</button>
+                    </div>
+                    <div class="product_eara">
+                        <div class="product_name">
+                            <div class="product_nameEara">
+                                <label class="bold">手机号:</label>
+                                <input type="text" class="product_search" ng-model="phoNum">
+                            </div>
+                        </div>
+                        <div class="product_name big">
+                            <div class="ABtime product_nameEara">
+
+                                <span class="bold agency Time">升级时间：&nbsp&nbsp&nbsp</span>
+
+                                <input class="time startTime date"
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});">&nbsp--&nbsp<input
+                                    class="time endTime date "
+                                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});">
+                            </div>
+                        </div>
+                        <div class="product_searchEara">
+                            <input type="button" value="搜索" class="search_btn top_1" ng-click="searchAB()" style="margin-left: 30px">
+                        </div>
+                    </div>
+                    <div class="table_lis">
+                        <!--<div >-->
+                        <!--<a class="order_lis simulateBtn" ng-click="educeLis()">导出列表</a>-->
+                        <!--</div>-->
+                        <table class="table  table-hover text-center  ">
+                            <thead>
+                            <tr id="product_lis_title">
+                                <th class="text-center">手机号</th>
+                                <th class="text-center">用户等级</th>
+                                <th class="text-center">升级时间</th>
+                                <th class="text-center">用户邀请码</th>
+                                <!--<th class="text-center" >时效</th>-->
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in agency">
+                                <td>{{item.mobile}}</td>
+                                <td>
+                                    {{item.micro_business_role}}
+                                </td>
+                                <!--<td > {{item.userType}}</td>-->
+                                <td>{{item.update_date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <!--<td>oooo</td>-->
+                                <td>{{item.micro_random}}</td>
+                                <td>
+                                    <a ui-sref="agencyParticulars({id:item.id,userType:pageParamVoDTO.userType,pageNo:pageParamVoDTO.pageNo,mobile:pageParamVoDTO.mobile,userType:pageParamVoDTO.userType,st:pageParamVoDTO.st,et:pageParamVoDTO.et})"
+                                       class="orderBtn">详情</a></td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                        <div page-tool></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

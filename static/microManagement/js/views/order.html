@@ -1,0 +1,147 @@
+  <div ng-click="bgAll()">
+     <nav-bar index1="3" index2="31"></nav-bar>
+     <div class="main_content">
+         <enjoy-menu></enjoy-menu>
+         <div class="content_box">
+             <div class="mum" ng-show="mum">
+                 <div class="m-load2">
+                     <div class="line">
+                         <div></div>
+                         <div></div>
+                         <div></div>
+                         <div></div>
+                         <div></div>
+                         <div></div>
+                     </div>
+                     <div class="circlebg"></div>
+                 </div>
+             </div>
+             <div class="product_content_right">
+                 <div class="rightCenter">
+                     <div class="product_lis meunLis" >
+                         <button ng-click="bgChangeAndSearch('')" ng-class="{'active':status==''}">全部订单</button>
+                         <button ng-click="bgChangeAndSearch('0')" ng-class="{'active':status=='0'}">待付款</button>
+                         <button ng-click="bgChangeAndSearch('1')" ng-class="{'active':status=='1'}">待发货</button>
+                         <button ng-click="bgChangeAndSearch('4')" ng-class="{'active':status=='4'}">待收货</button>
+                         <button ng-click="bgChangeAndSearch('2')" ng-class="{'active':status=='2'}">已完成</button>
+                     </div>
+
+                     <div class="product_eara">
+                         <div class="product_name">
+                             <div class="product_nameEara">
+                                 <label for="orderNums" class="bold">订单编号:</label>
+                                 <input type="text" class="product_search" id="orderNums" ng-model="orderReference">
+                             </div>
+
+                             <div class="product_nameEara">
+                                 <label  for="userNums" class="bold">买家账号:</label>
+                                 <input type="text" class="product_search" id="userNums"
+                                 ng-model="orderUserAccount">
+                             </div>
+
+                         </div>
+                         <div class="product_name big order">
+
+                             <div style=" margin-top: 22px; line-height: 31px;">
+                                 <label class="bold" >
+                                     支付时间：
+                                 </label>
+                                 <input  class="time orderPayStartTime  date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"  >&nbsp--&nbsp<input   class="time orderPayEndTime date " onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"   >
+                             </div>
+                             <div style=" margin-top: 22px; line-height: 31px;" ng-show="status!=='0'&&status!=1&&status!=4">
+                                 <label class="bold" >
+                                     完成时间：
+                                 </label>
+                                 <input  class="time orderComplishedStartTime  date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"  >&nbsp--&nbsp<input   class="time orderComplishedEndTime date " onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"   >
+                             </div>
+                         </div>
+                         <div class="product_searchEara">
+                             <input type="button" value="搜索" class="search_btn" ng-click="searchOrder()">
+                             <!--<input type="button" value="导入表" class="search_btn" ng-click="openModel()" ng-show='status==1' style="margin-left: 20px">-->
+                         </div>
+
+                         <div id="importExcelPop" style="z-index: 101;position: absolute" ng-if="uploadShow">
+                             <div style="width:610px;height:100px;">
+                                 <div class="modal-content">
+                                     <div class="modal-header">
+                                         <div class="modal-title">导入Excel文件</div>
+                                     </div>
+                                     <div class="modal-body">
+                                         <form class="form-horizontal" id="importExcelForm">
+                                             <div class="form-group">
+                                                 <label for="import" class="col-sm-2 control-label">选择文件：</label>
+                                                 <div class="col-sm-5" id="import">
+                                                     <!--<div class="form-control" type="text" name="fileName" readonly placeholder="" ng-required="isAdd">-->
+                                                     <!--&lt;!&ndash;{{file ? file.name : '' | limitString :20}}&ndash;&gt;-->
+                                                     <!--</div>-->
+                                                     <input id="fileUpload" type="file" type="file" ngf-select ng-model="file" accept=".xls,.xlsx,.csv" class="btn btn-not-important browse inline-div" />
+                                                 </div>
+                                                 <!--<div class="col-sm-5">-->
+                                                 <!--<input id="fileUpload" type="button" type="file" ngf-select ng-model="file" accept=".xls,.xlsx" class="btn btn-not-important browse inline-div">浏览</input>-->
+                                                 <!--</div>-->
+                                             </div>
+                                         </form>
+                                     </div>
+                                     <div class="modal-footer" style="padding-left:113px;">
+                                         <button type="button" class="btn btn-primary" ng-click="upload()">导入</button>
+                                         <button type="button" class="btn btn-third" ng-click="bindingConcel()" data-dismiss="modal">取消</button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="product_searchEara">
+                         <!--<input type="button" value="搜索" class="search_btn" ng-click="searchOrder()">-->
+                         <input type="button" value="导出表" class="search_btn" ng-click="educeLis()" ng-show='status==1' style="margin: 20px 0;">
+                     </div>
+                     <div class="table_lis">
+                         <!--<div >-->
+                             <!--<a class="order_lis simulateBtn" ng-click="educeLis()">导出列表</a>-->
+                         <!--</div>-->
+                         <table class="table  text-center " >
+                             <thead>
+                                 <tr id="product_lis_title">
+                                     <th class="text-center" >订单编号</th>
+                                     <th class="text-center" >交易流水号</th>
+                                     <th class="text-center" >买家账号</th>
+                                     <!--<th class="text-center">昵称</th>-->
+                                     <!--<th class="text-center" >买家账号</th>-->
+                                     <th class="text-center" >付款时间</th>
+
+                                     <th class="text-center" >状态</th>
+                                     <th class="text-center" >当前状态时间</th>
+                                     <th class="text-center" style="width:18%;">操作</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr ng-repeat="item in orderLis" class="pointer">
+                                     <td >{{item.order_id}}</td>
+                                     <td >{{item.transaction_id}}</td>
+                                     <td >{{item.mobile}}</td>
+                                     <!--<td>{{item.nickName}}</td>-->
+                                     <!--<td>{{item.mobile}}</td>-->
+                                     <td>{{item.status =='未付款'?'——':item.pay_date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                     <!--<td>{{item.updateDate|date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+                                     <td>{{item.status}}</td>
+                                     <td>{{item.status =='未付款'?'——':item.update_date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                     <td>
+                                         <a ui-sref="orderParticulars({id:item.order_id,status:PageParamVoDTO.status,pageNo:PageParamVoDTO.pageNo,stp:PageParamVoDTO.stp,etp:PageParamVoDTO.etp,stc:PageParamVoDTO.stc,etc:PageParamVoDTO.etc,orderReference:orderReference,orderUserAccount:orderUserAccount})" class="orderBtn">详情</a>
+     <!--<a  class="orderBtn" ng-click="waybillNum(item.businessOrderId,item.transactionId,item.waybillNumber);$event.stopPropagation()"  ng-show="{{item.status == '待收货'}}">{{item.waybillNumber == null?'绑定运单号':'修改运单号'}}</a>-->
+                                     </td>
+                             </tr>
+                             </tbody>
+                         </table>
+                         <!--<div class="priceArea"  ng-click="viod();$event.stopPropagation()" ng-show="waybillNumFlag">-->
+                             <!--<p class="deposit" style="margin-top:36px;"><label for="num">运单号：</label><input type="text" id="num"  ng-model="orderCopRelationDTO.waybillNumber"></p>-->
+
+                             <!--<p class="deposit"><button  ng-click="waybillNumSave()" style="width: 80px; height: 30px;-->
+    <!--background: #b4e5e2;margin-top: 26px;margin-left: 174px;color: gray;font-size: 15px;">确认</button></p>-->
+                         <!--</div>-->
+                         <div page-tool></div>
+                     </div>
+                 </div>
+             </div>
+             <div class="product_content_left"></div>
+         </div>
+     </div>
+  </div>

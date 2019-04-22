@@ -1,0 +1,38 @@
+
+  <div>
+    <nav-bar index1="8" index2="81"></nav-bar>
+    <div class="main_content">
+        <enjoy-menu></enjoy-menu>
+         <div class="content_box">
+             <div>
+                 <button style="margin-left:-11px;margin-top:20px;font-family: 微软雅黑;color: #3e0e0e;font-size: 12px;background: #f2857d;padding: 10px 20px 10px 20px;text-decoration: none;text-decoration: 26px;margin-left: 20px;" ng-click="backList()">返回列表</button>
+                 <hr style="margin-top:10px;background-color:#c0bebe;height:2px;"/>
+             </div>
+             <div class="product_content_right">
+                 <div class="rightCenter">
+
+                     <div class="uploading_product_name">
+                         <label for="productClassName">
+                             二级类目名称:
+                         </label>
+                         <input type="text" style="width:32%;" id="productClassName" class="product_search productClassName"  ng-model="seckillActivityDTO.productClassName">
+                     </div>
+
+                     <div class="uploading_product_name">
+                         <label for="productClassName">
+                             图片:
+                         </label>
+                         <input onchange="angular.element(this).scope().img_upload(this.files)" type="file" style="margin-left: 115px;margin-top: 40px;">
+                         <img ng-src="{{url}}" class="hintPic" ng-show="url!=''?true:false" style="width: 27%;height: 100%;margin: 2px;margin-left: 135px;">
+                     </div>
+
+                     <div class="save saveOperation">
+                         <button style="margin-top:20px;font-family: 微软雅黑;color: #3e0e0e;font-size: 18px;background: #acb0e1;padding: 5px 25px 5px 25px;text-decoration: none;text-decoration: 26px;margin-left: -100px;" ng-click="addTwoProductClass()">保存</button>
+                     </div>
+                 </div>
+             </div>
+             <div class="product_content_left">
+             </div>
+         </div>
+     </div>
+  </div>

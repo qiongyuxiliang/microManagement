@@ -1,0 +1,94 @@
+<div>
+    <nav-bar index1="8" index2="81"></nav-bar>
+    <div class="main_content">
+        <enjoy-menu></enjoy-menu>
+        <div class="content_box">
+            <div class="mum" ng-show="mum">
+                <div class="m-load2">
+                    <div class="line">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="circlebg"></div>
+                </div>
+            </div>
+            <div>
+                <span style="margin-top:18px;font-family:Aria;font-size:20px; width:139px;height:35px;line-height:20px;text-align:center;display:block;">商品分类列表</span>
+                <hr style="margin-top:10px;background-color:#c0bebe;height:1px;"/>
+            </div>
+            <div class="product_content_right"style="margin-top:-45px;">
+                <div class="rightCenter">
+                    <div class="product_eara" style="margin-top: 40px;">
+                        <div class="product_name" style="width:85%">
+                            <div class="product_nameEara" style="float:left;margin-top: 27px;margin-right: 50px;width:35%">
+                                <label class="bold">类型名称:</label>
+                                <input type="text" id="productClassName" style="width:50%" class="product_search" ng-model="productClassName">
+                            </div>
+                            <div  style="float:left;margin-top: 27px;width:32%;">
+                                <label style="font-weight:600;">类别:</label>
+                                <select class="checkStatus selectWidth" id="type" style="width:155px;border:1px solid;height:30px;color:#7f818a;">
+                                    <option value="notSpecial">微商城</option>
+                                    <option value="special">跨境商品类别</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="product_searchEara">
+                            <input type="button" value="搜索" class="search_btn top_1" ng-click="searchProductClass()">
+                        </div>
+                        <div  class="product_searchEara"  style="margin-left:12px;width:15%;margin-top:50px;line-height: 16px;">
+                            <input align="right"  type="button" value="新建分类" class="search_btn" ng-click="addOneProductClass()" style="width: 120px;margin-top: 10px;">
+                        </div>
+
+                    </div>
+                    <br/>
+                    <!--修改产品名称-->
+                    <div ng-if = "classTypeInfo.updateClassType == true" class="list" >
+                        <label class="bold" style="width: 15%;font-size: medium";>{{classTypeInfo.desc}}：</label>
+                        <label class="item item-input" style="width:20%;margin-left: 20px;">
+                            <input type="text" ng-model=classTypeInfo.className placeholder="修改名称">
+                        </label>
+                        <label>
+                            <button type="button" class="btn btn-primary" ng-click="updateClassTypeInfo()">确认</button>
+                        </label>
+                    </div>
+
+                    <div class="table_lis" style="padding-top:28px;">
+                        <table class="table text-center ">
+                            <thead>
+                            <tr id="product_lis_title">
+                                <th class="text-center">类别名称</th>
+                                <th class="text-center">类别</th>
+                                <th class="text-center">创建时间</th>
+                                <th class="text-center" colspan="5">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in productClassDataList">
+                                <td>{{item.productClassName}}</td>
+                                <td>{{item.typeName}}</td>
+                                <td>{{item.createDate}}</td>
+                                <td colspan="5">
+                                    <a ng-click="showTwoProductClass(item.productClassId,item.productClassName);$event.stopPropagation()" class="orderBtn" >查看二级分类</a>
+                                    &nbsp;
+                                    <a ng-click="updateProductClassInfo(item.id,item.productClassName);$event.stopPropagation()" class="orderBtn" >修改</a>
+                                    &nbsp;
+                                    <a ng-if="item.sort != 1" ng-click="upClass(item.id,'one');$event.stopPropagation()" class="orderBtn" >上移</a>
+                                    &nbsp;
+                                    <a ng-if="item.sort != oneClassLiat.length" ng-click="downClass(item.id,'one');$event.stopPropagation()" class="orderBtn">下移</a>
+                                    &nbsp;
+                                    <a ng-click="delClass(item.id,'one');$event.stopPropagation()" class="orderBtn" >删除</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div page-tool></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

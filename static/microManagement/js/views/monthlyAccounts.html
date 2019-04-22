@@ -1,0 +1,302 @@
+<div ng-click="bgAll()" xmlns:margin-top="http://www.w3.org/1999/xhtml">
+    <nav-bar index1="6" index2="65"></nav-bar>
+    <div class="main_content">
+        <enjoy-menu></enjoy-menu>
+        <div class="content_box">
+            <div class="mum" ng-show="mum" style="height:888px;">
+                <div class="m-load2">
+                    <div class="line" ng-show="circle">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="circlebg" ng-show="circle"></div>
+                </div>
+            </div>
+            <div class="product_content_right">
+                <div class="rightCenter">
+                    <div class="product_lis meunLis1" style="width: 666px">
+                        <button ng-click="bgChangeAndSearch('i')" ng-class="{'active':status=='i'}">即时奖励</button>
+                        <button ng-click="bgChangeAndSearch('k')" ng-class="{'active':status=='k'}">推荐奖励</button>
+                        <button ng-click="bgChangeAndSearch('j')" ng-class="{'active':status=='j'}">团队奖励</button>
+                    </div>
+
+                    <form role="form">
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-lg-3">
+                                <label class="bold">手机号:</label>
+                                <input type="text" ng-model="MAccount">
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="bold">审核状态:</label>
+                                <select class="checkStatus selectWidth" id="checkStatus" style="border:1px solid;height:30px;color:#7f818a;">
+                                    <option value=""> 全部状态</option>
+                                    <option value="0"> 未审核</option>
+                                    <option value="1">运营已审核</option>
+                                    <option value="2">财务已审核</option>
+                                    <option value="3">双方已审核</option>
+                                    <option value="4">审核拒绝</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-lg-4">
+                                <label class="bold">时间:</label>
+                                <input class="time MStart date startTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:true});" style="height: 30px;width: 44%;">&nbsp;&nbsp;&nbsp;&nbsp;到
+                            </div>
+                            <div class="col-lg-4">
+                                <input class="time MEnd date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:true});" style="height: 30px;width: 44%;margin-left: -3%;">
+                            </div>
+                        </div>
+                    </form>
+                    <div style="margin-top: 30px;display: inline-block;">
+                        <button type="button" style="margin-right: 10px;margin-bottom: 15px;width: 90px;height: 40px;"  class="btn btn-primary" ng-click="openModel()">导入</button>
+                        <button type="button" style="margin-right: 10px;margin-bottom: 15px;width: 90px;height: 40px;"  class="btn btn-primary" ng-click="export()">导出</button>
+                    </div>
+                    <button type="button" style="margin-right: 10px;margin-bottom: 15px;width: 90px;height: 40px;position: relative;bottom: 64px;margin-left: 38%;"   class="btn btn-primary" ng-click="searchMonthlyBalance()">搜索</button>
+                    <div id="importExcelPop" style="z-index: 101;position: absolute" ng-if="uploadShow">
+                        <div style="width:610px;height:100px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-title">导入Excel文件</div>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" id="importExcelForm">
+                                        <div class="form-group">
+                                            <label for="import" class="col-sm-2 control-label">选择文件：</label>
+                                            <div class="col-sm-5" id="import">
+                                                <!--<div class="form-control" type="text" name="fileName" readonly placeholder="" ng-required="isAdd">-->
+                                                <!--&lt;!&ndash;{{file ? file.name : '' | limitString :20}}&ndash;&gt;-->
+                                                <!--</div>-->
+                                                <input id="fileUpload" type="file" type="file" ngf-select ng-model="file" accept=".xls,.xlsx,.csv" class="btn btn-not-important browse inline-div" />
+                                            </div>
+                                            <!--<div class="col-sm-5">-->
+                                            <!--<input id="fileUpload" type="button" type="file" ngf-select ng-model="file" accept=".xls,.xlsx" class="btn btn-not-important browse inline-div">浏览</input>-->
+                                            <!--</div>-->
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer" style="padding-left:113px;">
+                                    <button type="button" class="btn btn-primary" ng-click="upload()">导入</button>
+                                    <button type="button" class="btn btn-third" ng-click="bindingConcel()" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="list" >
+                        <table  ng-if="status=='i'||status=='j'||status=='k'" class="table  text-center ">
+                            <thead>
+                            <tr id="product_lis_title IncomeListTitle" class="pos" style="">
+                                <th class="text-center" >账单ID</th>
+                                <th class="text-center" >昵称</th>
+                                <th class="text-center" >手机号</th>
+                                <th class="text-center" >当前等级</th>
+                                <th class="text-center" >佣金金额</th>
+                                <th class="text-center">生成时间</th>
+                                <th class="text-center" ng-hide="status=='month'">付款时间</th>
+                                <th class="text-center">类型</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center" ng-hide="status=='month'">订单状态</th>
+                                <th class="text-center">审核</th>
+                                <th class="text-center" colspan="2" style="width:20%;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbodyCla pos" ng-repeat="item in MonthlyBalanceLis"  >
+                            <tr class='white' ng-class="{'red':item.secondCheckStatus=='有一方拒绝','col55a4ef':agencyIndex == $index,'bge5':$index%2==0,'bgf2':$index%2==1}">
+                                <td ng-click="viod();$event.stopPropagation()">{{item.order_id}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.current_user_name}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.current_user_phone}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.current_user_role}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.rebate_money }}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.create_date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td ng-click="viod();$event.stopPropagation()"ng-hide="status=='month'">{{item.create_date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.incomeType}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.amount_type}}</td>
+                                <td ng-click="viod();$event.stopPropagation()" ng-hide="status=='month'">{{item.orderStatus}}</td>
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{item.withdrawstatus}}</td>-->
+                                <td ng-click="viod();$event.stopPropagation()">{{item.secondCheckStatus}}<span ng-hide="item.secondCheckStatus == '未审核'">{{item.checkStatus}}</span><span ng-show="item.secondCheckStatus=='有一方拒绝'">:{{item.checkUserType}})</span></td>
+                                <td ng-click="viod();$event.stopPropagation()" colspan="2">
+                                    <a ng-click="details(item.sysUserId,$index,item.id);$event.stopPropagation()" class="orderBtn" >查看</a>
+                                    &nbsp;
+                                    <a ng-click="examine(item.id);$event.stopPropagation()" class="orderBtn" ng-show='item.operator_status==2&&item.finance_status==2'>审核</a>
+                                    <a ng-click="viod();$event.stopPropagation();" class="orderBtn" disabled style="color:#B1AEAE" ng-show="item.operator_status==0&&userInfo.userType.indexOf('manager')!=-1">已审核</a>
+                                    <a ng-click="viod();$event.stopPropagation();" class="orderBtn" disabled style="color:#B1AEAE" ng-show="item.finance_status==0&&userInfo.userType.indexOf('finance')!=-1">已审核</a>
+                                </td>
+                            </tr>
+                            <tr class="product_lis_title " ng-show="item.statesLook=='2'" id="IncomeListTitle">
+                                <th class="text-center" >下级昵称</th>
+                                <th class="text-center" >下级手机号</th>
+                                <th class="text-center" >下级当前等级</th>
+                                <th class="text-center" >下级购买之后的等级</th>
+
+                                <!--<th class="text-center" >生成订单等级</th>-->
+                                <!--<th class="text-center" >上级当前等级</th>-->
+                                <!--<th class="text-center">上级订单生成等级</th>-->
+                                <th class="text-center">订单编号</th>
+                                <!--<th class="text-center">交易流水号</th>-->
+                                <!--<th class="text-center">订单状态</th>-->
+                                <th class="text-center">交易金额</th>
+                                <!--<th class="text-center">升级消费</th>-->
+                                <th class="text-center">关系</th>
+                            </tr>
+                            <!--点击查看出现的下级内容-->
+                            <tr  ng-show="item.statesLook=='2'" id="IncomeListMess">
+                                <td ng-click="viod();$event.stopPropagation()">{{item.next_user_name}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.next_user_phone}}</td>
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{user[0].nextUserTypeNow}}</td>-->
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{user[0].nextUserType}}</td>-->
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{user[0].userTypeNow}}</td>-->
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{user[0].userType}}</td>-->
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{items.businessOrderId}}</td>-->
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{user[0].transactionId}}</td>-->
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{items.status}}</td>-->
+                                <!--<td ng-click="viod();$event.stopPropagation()">{{items.amount}}</td>-->
+                                <td ng-click="viod();$event.stopPropagation()">{{item.nextUserPrepurchaseRole}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.nextUserPostpurchaseRole}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.order_id}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.product_price*item.product_num}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{item.level_info}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--<table ng-if="status=='ee'||'ffwwwww'" class="table  text-center ">-->
+                        <!--<thead>-->
+                        <!--<tr id="product_lis_title1 IncomeListTitle1" >-->
+                        <!--<th class="text-center" >昵称</th>-->
+                        <!--<th class="text-center" >手机号</th>-->
+                        <!--<th class="text-center" >当前等级</th>-->
+                        <!--<th class="text-center" >上级名称</th>-->
+                        <!--<th class="text-center">上级手机号</th>-->
+                        <!--<th class="text-center">上级等级</th>-->
+                        <!--<th class="text-center">上级获得佣金</th>-->
+                        <!--<th class="text-center">类型</th>-->
+                        <!--<th class="text-center">审核</th>-->
+                        <!--<th class="text-center" colspan="2" style="width:20%;">操作</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody class="tbodyCla"  >-->
+                        <!--<tr ng-class="{'red':item.secondCheckStatus=='有一方拒绝'}" ng-repeat="item in MonthlyBalanceLis">-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.nextUserNickName}}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.nextUserMobile}}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.nextUserType}}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.nickName }}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.mobile}}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.userType}}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.amount}}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.status}}</td>-->
+                        <!--<td ng-click="void();$event.stopPropagation()">{{item.secondCheckStatus}}</td>-->
+                        <!--&lt;!&ndash;  <td ng-click="viod();$event.stopPropagation()">{{item.secondCheckStatus}}<span ng-hide="item.secondCheckStatus == '未审核'">({{item.checkStatus}}</span><span ng-show="item.secondCheckStatus=='有一方拒绝'">:{{item.checkUserType}})</span></td>&ndash;&gt;-->
+                        <!--<td ng-click="void();$event.stopPropagation()" colspan="2">-->
+                        <!--<a ng-click="details(item.nextUserId,item.createDate,item.incomeType,item.transactionId,$index,item.id);$event.stopPropagation()" class="orderBtn" >查看</a>-->
+                        <!--&nbsp;-->
+                        <!--<a ng-click="examine(item.id);$event.stopPropagation()" class="orderBtn" >审核</a>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                        <!--</table>-->
+
+                        <table ng-if="status=='shareActivity'" class="table  text-center ">
+                            <thead>
+                            <tr id="product_lis_title1 IncomeListTitle2" >
+                                <th class="text-center" >昵称</th>
+                                <th class="text-center" >手机号</th>
+                                <th class="text-center" >用户当前等级</th>
+                                <th class="text-center" >佣金金额</th>
+                                <th class="text-center">佣金生成时间</th>
+                                <th class="text-center">类型</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center">审核</th>
+                                <th class="text-center" colspan="3" style="width:20%;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbodyCla" ng-repeat="item in MonthlyBalanceLis">
+                            <tr ng-class="{'red':item.secondCheckStatus=='有一方拒绝'}" >
+                                <td ng-click="void();$event.stopPropagation()">{{item.nickName}}</td>
+                                <td ng-click="void();$event.stopPropagation()">{{item.mobile}}</td>
+                                <td ng-click="void();$event.stopPropagation()">
+                                    <span ng-if="item.userTypeNow == 'business-A-1'">A级</span>
+                                    <span ng-if="item.userTypeNow == 'business-B-1'">B级</span>
+                                    <span ng-if="item.userTypeNow == 'business-C-1'">C级</span>
+                                </td>
+                                <td ng-click="void();$event.stopPropagation()">{{item.amount }}</td>
+                                <td ng-click="void();$event.stopPropagation()">{{item.createDate|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td ng-click="void();$event.stopPropagation()">{{item.incomeType}}</td>
+                                <td ng-click="void();$event.stopPropagation()">{{item.status}}</td>
+                                <td ng-click="void();$event.stopPropagation()">{{item.secondCheckStatus}}</td>
+                                <!--  <td ng-click="viod();$event.stopPropagation()">{{item.secondCheckStatus}}<span ng-hide="item.secondCheckStatus == '未审核'">({{item.checkStatus}}</span><span ng-show="item.secondCheckStatus=='有一方拒绝'">:{{item.checkUserType}})</span></td>-->
+                                <td ng-click="void();$event.stopPropagation()" colspan="3">
+                                    <a ng-click="details(item.nextUserId,item.createDate,item.incomeType,item.transactionId,$index,item.id);$event.stopPropagation()" class="orderBtn" >查看</a>
+                                    &nbsp;
+                                    <a ng-click="examine(item.id);$event.stopPropagation()" class="orderBtn" >审核</a>
+                                </td>
+                            </tr>
+                            <!--点击查看出现的下级内容-->
+                            <tr class="product_lis_title " ng-show="item.shareActivityFlag" ng-class="{'red':item.secondCheckStatus=='有一方拒绝','col55a4ef':agencyIndex == $index,'bge5':$index%2==0,'bgf2':$index%2==1}" id="IncomeListTitle2">
+                                <th class="text-center" >昵称</th>
+                                <th class="text-center" >手机号</th>
+                                <th class="text-center" >当前等级</th>
+                                <th class="text-center" >用户生成订单等级</th>
+                                <th class="text-center" >上级当前等级</th>
+                                <th class="text-center">上级订单生成等级</th>
+                                <th class="text-center">付款时间</th>
+                                <th class="text-center">订单编号</th>
+                                <th class="text-center">交易流水号</th>
+                                <th class="text-center">订单状态</th>
+                                <th class="text-center">支付金额</th>
+                            </tr>
+                            <tr  ng-show="item.shareActivityFlag"  ng-repeat="items in ShareActivityList" id="IncomeListMess2">
+                                <td ng-click="viod();$event.stopPropagation()">{{items.nextUserNickName}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{items.nextUserMobile}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">
+                                    <span ng-if="items.nextUserTypeNow == 'business-A-1'">A级</span>
+                                    <span ng-if="items.nextUserTypeNow == 'business-B-1'">B级</span>
+                                    <span ng-if="items.nextUserTypeNow == 'business-C-1'">C级</span>
+                                </td>
+                                <td ng-click="viod();$event.stopPropagation()">
+                                    <span ng-if="items.nextUserType == 'business-A-1'">A级</span>
+                                    <span ng-if="items.nextUserType == 'business-B-1'">B级</span>
+                                    <span ng-if="items.nextUserType == 'business-C-1'">C级</span>
+                                </td>
+                                <td ng-click="viod();$event.stopPropagation()">
+                                    <span ng-if="item.userTypeNow == 'business-A-1'">A级</span>
+                                    <span ng-if="item.userTypeNow == 'business-B-1'">B级</span>
+                                    <span ng-if="item.userTypeNow == 'business-C-1'">C级</span>
+                                </td>
+                                <td ng-click="viod();$event.stopPropagation()">
+                                    <span ng-if="items.userType == 'business-A-1'">A级</span>
+                                    <span ng-if="items.userType == 'business-B-1'">B级</span>
+                                    <span ng-if="items.userType == 'business-C-1'">C级</span>
+                                </td>
+                                <td ng-click="viod();$event.stopPropagation()">{{items.payDate|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{items.orderId}}</td>
+                                <td ng-click="viod();$event.stopPropagation()">{{items.transactionId}}</td>
+                                <td>
+                                    <span ng-if="items.orderStatus == 0">未付款</span>
+                                    <span ng-if="items.orderStatus == 1">待发货</span>
+                                    <span ng-if="items.orderStatus == 2">已完成</span>
+                                    <span ng-if="items.orderStatus == 3">物品在购物车中</span>
+                                    <span ng-if="items.orderStatus == 4">待收货</span>
+                                    <span ng-if="items.orderStatus == 'del'">订单已删除</span>
+                                </td>
+                                <td ng-click="viod();$event.stopPropagation()">{{items.transactionAmount}}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="auditArea" ng-show="auditFlag" ng-click="viod();$event.stopPropagation()">
+                            <p class="textTitle">确认无误审核通过？</p>
+
+                            <p ><button class="candel" ng-click="auditChange(0)">通过</button><button class="true" ng-click="auditChange(1)">驳回</button></p>
+                        </div>
+                        <div page-tool></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
